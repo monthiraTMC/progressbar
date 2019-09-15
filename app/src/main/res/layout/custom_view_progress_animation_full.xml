@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:interpolator="@android:anim/linear_interpolator"
+        android:gravity="center"
+        android:id="@+id/progresslayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp">
+
+        <ImageView
+                android:backgroundTint="@color/colorGray03"
+                android:id="@+id/progress_circle01"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/custom_four_circle_progressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <RelativeLayout
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <ImageView
+                    android:id="@+id/progress_circle02"
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/custom_four_circle_progressbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <ImageView
+                    android:backgroundTint="@color/colorGray02"
+                    android:id="@+id/progress_circle03"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/custom_four_circle_progressbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+        <ImageView
+                android:backgroundTint="@color/colorGray01"
+                android:background="@drawable/custom_four_circle_progressbar"
+                android:id="@+id/progress_circle04"
+                android:layout_centerInParent="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+    </RelativeLayout>
+</LinearLayout>
