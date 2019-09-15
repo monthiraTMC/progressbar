@@ -26,6 +26,7 @@ class CustomProgressAnimationView(context: Context, attrs: AttributeSet) : Linea
         private const val TRANSLATION_Y = "translationY"
         private const val TRANSLATION_VALUE = 10f
         private const val TRANSLATION_X = "translationX"
+        private const val ROTATION = "rotation"
     }
 
     init {
@@ -63,7 +64,7 @@ class CustomProgressAnimationView(context: Context, attrs: AttributeSet) : Linea
 
     @SuppressLint("WrongConstant")
     private fun createRotationAnimator(): Animator? {
-        return ObjectAnimator.ofFloat(view, "rotation", START_ANGLE, END_ANGLE).apply {
+        return ObjectAnimator.ofFloat(view, ROTATION, START_ANGLE, END_ANGLE).apply {
             duration = durationAnimation
             repeatCount = Animation.INFINITE
             repeatMode = Animation.INFINITE
