@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:interpolator="@android:anim/linear_interpolator"
+        android:gravity="center"
+        android:id="@+id/progress_mainlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ImageView
+            android:backgroundTint="@color/scb_purple"
+            android:id="@+id/progress_inline_circle01"
+            android:background="@drawable/custom_circle_progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <ImageView
+            android:layout_marginLeft="3dp"
+            android:backgroundTint="@color/scb_purple"
+            android:id="@+id/progress_inline_circle02"
+            android:background="@drawable/custom_circle_progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <ImageView
+            android:layout_marginLeft="3dp"
+            android:backgroundTint="@color/scb_purple"
+            android:id="@+id/progress_inline_circle03"
+            android:background="@drawable/custom_circle_progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

@@ -5,6 +5,7 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -29,14 +30,13 @@ class CustomViewProgressAnimationFull(context: Context, attrs: AttributeSet) : L
         private const val ROTATION = "rotation"
     }
 
-
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         view = inflater.inflate(R.layout.custom_view_progress_animation_full, this, true)
         playAnimation()
     }
 
-    private fun playAnimation() {
+    fun playAnimation() {
         animatorSet.cancel()
         animatorSet = AnimatorSet().apply {
             val rotationAnimator = createRotationAnimator()

@@ -1,193 +1,51 @@
 package com.codemobile.doitprogressapp
 
+import android.animation.Animator
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.*
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
-import com.hmomeni.progresscircula.dpToPx
+import android.view.animation.Animation
+import android.widget.FrameLayout
+import kotlinx.android.synthetic.main.custom_view_progress_animation.view.*
 
 
-class CustomViewProgressAnimation(context: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attributeSet, defStyleAttr) {
-    private val TAG = this.javaClass.simpleName
+class CustomViewProgressAnimation(context:Context,attrs: AttributeSet) :FrameLayout(context,attrs) {
+    private var animatorSet = AnimatorSet()
+    private var durationAnimation = 700L
+    private var view: View
 
-    constructor(context: Context, attributeSet: AttributeSet? = null) : this(context, attributeSet, 0) {
-        val a = context.theme.obtainStyledAttributes(
-                attributeSet,
-                R.styleable.ProgressCircula,
-                0, 0)
-
-        try {
-            progress = a.getInteger(R.styleable.ProgressCircula_pgc_progress, progress)
-            showProgress = a.getBoolean(R.styleable.ProgressCircula_pgc_showProgress, showProgress)
-            indeterminate = a.getBoolean(R.styleable.ProgressCircula_pgc_indeterminate, indeterminate)
-            rimColor = a.getInteger(R.styleable.ProgressCircula_pgc_rimColor, rimColor)
-            rimWidth = a.getDimension(R.styleable.ProgressCircula_pgc_rimWidth, rimWidth)
-            textColor = a.getInteger(R.styleable.ProgressCircula_pgc_textColor, textColor)
-            speed = a.getFloat(R.styleable.ProgressCircula_pgc_speed, speed)
-        } finally {
-            a.recycle()
-        }
-
+    init {
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        view = inflater.inflate(R.layout.custom_view_progress_animation, this, true)
+        onProgressLoading()
     }
 
-    private val oval = RectF()
-    private val textBounds = Rect()
-    private var step = 0f
-    private var isRotating = true
-    private var currentProgress = 0
-    var progress = 0
-        set(value) {
-            field = value
-            indeterminate = false
-            if (value < 100) {
-                isRotating = true
-                postInvalidate()
-            }
+    fun onProgressLoading(){
+        //progressbar rotate
+        animatorSet.cancel()
+        animatorSet = AnimatorSet().apply {
+            val rotationAnimator = createRotationAnimator()
+            playTogether(
+                rotationAnimator
+            )
         }
-
-    var indeterminate = true
-        set(value) {
-            field = value
-            if (value) {
-                showProgress = false
-                isRotating = true
-                postInvalidate()
-            }
-        }
-    var showProgress = true
-        set(value) {
-            field = value
-            postInvalidate()
-        }
-    var textColor = Color.BLACK
-        set(value) {
-            field = value
-            textPaint.color = value
-        }
-
-    var rimColor = Color.RED
-        set(value) {
-            field = value
-            outerRim.color = value
-        }
-
-    var rimWidth = dpToPx(15).toFloat()
-        set(value) {
-            field = value
-            outerRim.strokeWidth = value
-        }
-
-    var speed = 4f
-
-    private val outerRim = Paint().apply {
-        color = rimColor
-        strokeWidth = rimWidth
-        style = Paint.Style.STROKE
-        strokeCap = Paint.Cap.ROUND
-        isAntiAlias = true
-    }
-    private val textPaint = Paint().apply {
-        color = textColor
-        textAlign = Paint.Align.CENTER
-        textSize = dpToPx(16).toFloat()
+        animatorSet.start()
     }
 
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-
-        if (!indeterminate) {
-            step += 3 * speed
-        }
-
-        val width = width.toFloat()
-        val height = height.toFloat()
-        val radius: Float
-
-        radius = if (width > height) {
-            height / 2
-        } else {
-            width / 2
-        } - paddingBottom - (rimWidth / 2) // subtracting (rimWidth / 2) so that the arc doesn't get out of the window by half
-
-        val centerX = width / 2
-        val centerY = height / 2
-
-        oval.set(centerX - radius,
-                centerY - radius,
-                centerX + radius,
-                centerY + radius)
-        calculateStartAngle()
-        calculateSweepAngle()
-        canvas.drawArc(oval, startAngle, sweepAngle, false, outerRim)
-        if (isRotating)
-            postInvalidate()
-        if (step >= 360) {
-            step = 0f
-        }
-
-        if (showProgress) {
-            val text = "$currentProgress%"
-            textPaint.getTextBounds(text, 0, text.length, textBounds)
-            canvas.drawText(text, centerX, centerY - textBounds.exactCenterY(), textPaint)
-        }
+    fun onProgressStop(){
+        animatorSet.cancel()
     }
 
-    private var isIncrement = true
-    private var sweepAngle: Float = 0f
-    private var sweepStep = 4
-
-    private fun calculateSweepAngle() {
-        if (!indeterminate) {
-            if (currentProgress < progress) {
-                currentProgress++
-            } else if (currentProgress > progress) {
-                currentProgress--
-            }
-            if (currentProgress >= 100) {
-                isRotating = false
-            }
-            sweepAngle = currentProgress * 360 / 100F
-        } else {
-            if (isIncrement) {
-                currentProgress++
-                sweepAngle += sweepStep * speed
-            } else {
-                currentProgress--
-                sweepAngle -= sweepStep * speed
-            }
-
-            if (sweepAngle >= 360) {
-                isIncrement = false
-            } else if (sweepAngle <= 0) {
-                isIncrement = true
-            }
+    @SuppressLint("WrongConstant")
+    private fun createRotationAnimator(): Animator? {
+        return ObjectAnimator.ofFloat(view.progressBar, ROTATION, 360f, 0f).apply {
+            duration = durationAnimation
+            repeatCount = Animation.INFINITE
+            repeatMode = Animation.INFINITE
         }
-    }
-
-    private fun calculateStartAngle() {
-        if (!indeterminate) {
-            startAngle = step % 360F
-            if (step > 360) {
-                step = 0f
-            }
-        } else {
-            startAngle += if (!isIncrement) {
-                sweepStep * 2
-            } else {
-                sweepStep
-            } * speed
-        }
-        startAngle %= 360f
-    }
-
-    private var startAngle: Float = 0f
-
-    fun startRotation() {
-        isRotating = true
-        postInvalidate()
-    }
-
-    fun stopRotation() {
-        isRotating = false
     }
 }
