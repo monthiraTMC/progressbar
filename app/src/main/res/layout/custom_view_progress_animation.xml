@@ -3,14 +3,13 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#80FFFFFF"
         android:gravity="center"
         android:orientation="vertical">
 
     <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:progress="50"
             android:progressDrawable="@drawable/progressbar_circle"
             android:indeterminate="false"
