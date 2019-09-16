@@ -7,7 +7,7 @@ import android.view.View
 import com.hmomeni.progresscircula.dpToPx
 
 
-class ProgressCircula(context: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attributeSet, defStyleAttr) {
+class CustomViewProgressAnimation(context: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attributeSet, defStyleAttr) {
     private val TAG = this.javaClass.simpleName
 
     constructor(context: Context, attributeSet: AttributeSet? = null) : this(context, attributeSet, 0) {

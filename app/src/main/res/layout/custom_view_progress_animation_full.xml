@@ -4,11 +4,12 @@
         android:orientation="vertical"
         android:interpolator="@android:anim/linear_interpolator"
         android:gravity="center"
-        android:id="@+id/progresslayout"
+        android:id="@+id/progress_mainlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     <RelativeLayout
+            android:id="@+id/progress_sublayout"
             android:layout_width="40dp"
             android:layout_height="40dp">
 
